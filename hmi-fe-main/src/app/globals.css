@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #1e40af;
+  --primary-hover: #1e3a8a;
+  --secondary: #f1f5f9;
+  --secondary-hover: #e2e8f0;
+  --border: #bfdbfe;
+  --muted: #1e40af;
+  --card: #ffffff;
+  --card-border: #f8fafc;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary: #a78bfa;
+    --primary-hover: #c4b5fd;
+    --secondary: #374151;
+    --secondary-hover: #4b5563;
+    --border: #374151;
+    --muted: #9ca3af;
+    --card: #1f2937;
+    --card-border: #374151;
+  }
+} */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", sans-serif;
+  line-height: 1.6;
+}
+
+/* Custom utility classes for the Claude theme */
+.claude-bg {
+  background-color: var(--background);
+}
+
+.claude-text {
+  color: var(--foreground);
+}
+
+.claude-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.claude-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.claude-secondary {
+  background-color: var(--secondary);
+  color: var(--foreground);
+}
+
+.claude-secondary:hover {
+  background-color: var(--secondary-hover);
+}
+
+.claude-card {
+  background-color: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.claude-input {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--foreground);
+}
+
+.claude-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
