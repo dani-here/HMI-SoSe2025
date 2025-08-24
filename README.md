@@ -24,6 +24,12 @@ This research investigates how users perceive and evaluate the quality of respon
 - Danish Ali
 - Muhammad Furqan Shafique
 
+## Screenshots
+
+<img width="1280" height="604" alt="1_Consent" src="https://github.com/user-attachments/assets/53dcfeed-38bb-45a7-b955-b99ae7ef567d" />
+<img width="1280" height="606" alt="3_Task-1" src="https://github.com/user-attachments/assets/7120c66a-e3af-4a36-aab8-b454bea1ac4a" />
+<img width="1280" height="608" alt="4_Task-Survey-1" src="https://github.com/user-attachments/assets/638d3096-fcc0-4b9a-ad9c-2d554cef24e1" />
+
 ## Contact
 
 For queries, please reach out to Muhammad Hamza Laghari (muhammad.laghari@stud.fra-uas.de)
