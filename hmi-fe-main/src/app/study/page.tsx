@@ -3,7 +3,12 @@
 import { useState } from "react";
 import { useStudy } from "@/context/StudyContext";
 import { studyService } from "@/services/studyService";
-import { Participant, ChatMessage, TaskSurveyRequest, FinalSurveyRequest } from "@/types/study";
+import {
+  Participant,
+  ChatMessage,
+  TaskSurveyRequest,
+  FinalSurveyRequest,
+} from "@/types/study";
 import LandingPage from "@/components/LandingPage";
 import PreSurvey from "@/components/PreSurvey";
 import ConsentForm from "@/components/ConsentForm";
@@ -40,7 +45,7 @@ export default function StudyPage() {
 
   // Handle landing page start
   const handleStartStudy = () => {
-    setCurrentStep("pre-survey");
+    setCurrentStep("consent");
   };
 
   // Handle pre-survey submission
@@ -60,7 +65,7 @@ export default function StudyPage() {
         payload: registrationResponse,
       });
 
-      setCurrentStep("consent");
+      setCurrentStep("briefing");
     } catch (error) {
       toast.error("Failed to submit survey. Please try again.");
       console.error("Error submitting pre-survey:", error);
@@ -78,10 +83,8 @@ export default function StudyPage() {
 
     setIsLoading(true);
     try {
-      if (state.participantId) {
-        dispatch({ type: "SET_CONSENT", payload: true });
-        setCurrentStep("briefing");
-      }
+      dispatch({ type: "SET_CONSENT", payload: true });
+      setCurrentStep("pre-survey");
     } catch (error) {
       toast.error("Failed to submit consent. Please try again.");
       console.error("Error submitting consent:", error);
@@ -144,7 +147,10 @@ export default function StudyPage() {
   };
 
   // Handle message rating
-  const handleRateMessage = async (messageId: string, rating: "up" | "down") => {
+  const handleRateMessage = async (
+    messageId: string,
+    rating: "up" | "down"
+  ) => {
     // Find the message to get its logId
     const message = messages.find((msg) => msg.id === messageId);
     if (!message || !message.logId) {
@@ -174,7 +180,10 @@ export default function StudyPage() {
       setMessages((prev) =>
         prev.map((msg) =>
           msg.id === messageId
-            ? { ...msg, [rating === "up" ? "thumbsUp" : "thumbsDown"]: undefined }
+            ? {
+                ...msg,
+                [rating === "up" ? "thumbsUp" : "thumbsDown"]: undefined,
+              }
             : msg
         )
       );
@@ -204,20 +213,27 @@ export default function StudyPage() {
 
   // Calculate total chat time from all completed sessions
   const getTotalChatTime = () => {
-    return state.chatSessions.reduce((total, session) => total + session.duration, 0);
+    return state.chatSessions.reduce(
+      (total, session) => total + session.duration,
+      0
+    );
   };
 
   // Handle task feedback submission
-  const handleTaskFeedbackSubmit = async (feedback: Omit<TaskSurveyRequest, "id">) => {
+  const handleTaskFeedbackSubmit = async (
+    feedback: Omit<TaskSurveyRequest, "id">
+  ) => {
     if (!state.participantId || !currentTask || !state.participant) return;
 
     setIsLoading(true);
     try {
       // Get the duration of the current task's chat session
       const currentChatSession = state.chatSessions.find(
-        session => session.taskId === currentTask.id
+        (session) => session.taskId === currentTask.id
       );
-      const chatSessionDuration = currentChatSession ? currentChatSession.duration : 0;
+      const chatSessionDuration = currentChatSession
+        ? currentChatSession.duration
+        : 0;
 
       // Calculate survey duration (time spent on the survey form)
       const surveyDuration = surveyStartTime
@@ -271,7 +287,12 @@ export default function StudyPage() {
   };
 
   // Handle final survey submission
-  const handleFinalSurveySubmit = async (survey: Omit<FinalSurveyRequest, "id" | "completionDate" | "finalSurveyJSON">) => {
+  const handleFinalSurveySubmit = async (
+    survey: Omit<
+      FinalSurveyRequest,
+      "id" | "completionDate" | "finalSurveyJSON"
+    >
+  ) => {
     if (!state.participantId || !state.participant) return;
 
     setIsLoading(true);
@@ -355,13 +376,15 @@ export default function StudyPage() {
       case "task-feedback":
         if (!currentTask || !state.participant)
           return <div>Loading feedback...</div>;
-        
+
         // Get the duration of the current task's chat session
         const currentChatSession = state.chatSessions.find(
-          session => session.taskId === currentTask.id
+          (session) => session.taskId === currentTask.id
         );
-        const chatSessionDuration = currentChatSession ? currentChatSession.duration : 0;
-        
+        const chatSessionDuration = currentChatSession
+          ? currentChatSession.duration
+          : 0;
+
         return (
           <div className="h-screen flex flex-col">
             <TaskFeedback
@@ -380,10 +403,10 @@ export default function StudyPage() {
 
       case "final-survey":
         if (!state.participant) return <div>Loading final survey...</div>;
-        
+
         // Calculate total chat time from all sessions
         const totalChatTime = getTotalChatTime();
-        
+
         return (
           <FinalSurvey
             participant={state.participant}
@@ -414,18 +437,21 @@ export default function StudyPage() {
                   help us improve AI language models and make them more useful
                   for everyone.
                 </p>
-                
+
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                   <p className="text-green-800 font-medium">
-                    Your participation certificate will be sent to your email within a few days.
+                    Your participation certificate will be sent to your email
+                    within a few days.
                   </p>
                 </div>
 
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                  <h3 className="font-semibold text-blue-800 mb-2">Contact Information</h3>
+                  <h3 className="font-semibold text-blue-800 mb-2">
+                    Contact Information
+                  </h3>
                   <p className="text-blue-700 text-sm mb-3">
-                    If you have any questions about this study or need assistance, 
-                    please contact our research team:
+                    If you have any questions about this study or need
+                    assistance, please contact our research team:
                   </p>
                   <div className="space-y-1">
                     <p className="text-blue-800 font-medium">
@@ -438,7 +464,8 @@ export default function StudyPage() {
                       Danish Ali: danish.ali@stud.fra-uas.de
                     </p>
                     <p className="text-blue-800 font-medium">
-                      Muhammad Furqan Shafique: muhammad.shafique@stud.fra-uas.de
+                      Muhammad Furqan Shafique:
+                      muhammad.shafique@stud.fra-uas.de
                     </p>
                   </div>
                 </div>
